@@ -1,6 +1,7 @@
 package com.xagau.medical.controller;
 
 import com.xagau.medical.model.PdfMedicalFile;
+import com.xagau.medical.model.Patient;
 import com.xagau.medical.repository.PdfMedicalFileRepository;
 import com.xagau.medical.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
