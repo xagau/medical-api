@@ -48,7 +48,7 @@ public class Patient {
 
     private LocalDateTime lastLogin;
 
-    private String language;
+
 
     private String timezone;
 
