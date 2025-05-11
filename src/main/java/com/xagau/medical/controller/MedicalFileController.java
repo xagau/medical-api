@@ -60,7 +60,7 @@ public class MedicalFileController {
     public ResponseEntity<List<PdfMedicalFile>> getMedicalFilesByPatient(@PathVariable Long patientId) {
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
-        List<PdfMedicalFile> files = pdfMedicalFileRepository.findByPatient(patient);
+        List<PdfMedicalFile> files = pdfMedicalFileRepository.findByPatient(patient.getId());
         return ResponseEntity.ok(files);
     }
 
