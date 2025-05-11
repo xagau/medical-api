@@ -195,11 +195,14 @@ public class Patient {
     }
 
     public String getLanguage() {
-        return language;
+        return preferences.getLanguage();
     }
 
     public void setLanguage(String language) {
-        this.language = language;
+        if (preferences == null) {
+            preferences = new Preferences();
+        }
+        preferences.setLanguage(language);
     }
 
     public String getTimezone() {
