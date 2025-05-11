@@ -26,6 +26,16 @@ public class Patient {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PdfMedicalFile> medicalFiles = new ArrayList<>();
 
+    public void addMedicalFile(PdfMedicalFile file) {
+        medicalFiles.add(file);
+        file.setPatient(this);
+    }
+
+    public void removeMedicalFile(PdfMedicalFile file) {
+        medicalFiles.remove(file);
+        file.setPatient(null);
+    }
+
     public List<PdfMedicalFile> getMedicalFiles() {
         return medicalFiles;
     }

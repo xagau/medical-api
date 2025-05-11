@@ -21,8 +21,9 @@ public class PdfMedicalFile implements MedicalFile {
     @Lob
     private byte[] data;
 
-    @Column(name = "patient_id", nullable = false)
-    private Long patientId;
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
 
     @Override
     public Long getId() {
@@ -63,8 +64,12 @@ public class PdfMedicalFile implements MedicalFile {
         this.data = data;
     }
 
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Patient getPatient() {
+        return patient;
     }
 
     public String getFileName() {
@@ -84,7 +89,7 @@ public class PdfMedicalFile implements MedicalFile {
     }
 
     public Long getPatientId() {
-        return patientId;
+        return patient.getId();
     }
 
 
