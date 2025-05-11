@@ -39,7 +39,7 @@ public class PatientController {
         return patientRepository.findById(id)
                 .map(patient -> {
                     patient.setEmail(updated.getEmail());
-                    patient.setPassword(updated.getPassword());
+                    patient.setPasswordHash(updated.getPasswordHash());
                     patient.setPreferences(updated.getPreferences());
                     return patientRepository.save(patient);
                 })
