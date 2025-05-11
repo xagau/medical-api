@@ -87,7 +87,5 @@ public class PdfMedicalFile implements MedicalFile {
         return patientId;
     }
 
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
+
 }
