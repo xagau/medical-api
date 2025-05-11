@@ -82,6 +82,26 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <show>private</show>
+                    <detectLinks>true</detectLinks>
+                    <failOnError>false</failOnError>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <doclint>none</doclint>
+                    <detectOfflineLinks>true</detectOfflineLinks>
+                    <detectMissingComment>true</detectMissingComment>
+                    <detectMissingParamTag>true</detectMissingParamTag>
+                    <detectMissingReturnTag>true</detectMissingReturnTag>
+                    <detectMissingThrowsTag>true</detectMissingThrowsTag>
+                    <detectUndocumentedMembers>true</detectUndocumentedMembers>
+                    <detectInvalidInlineTag>true</detectInvalidInlineTag>
+                    <detectInvalidPackageHtml>true</detectInvalidPackageHtml>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>

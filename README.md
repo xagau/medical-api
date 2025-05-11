@@ -37,6 +37,18 @@ medical-api/
 └── pom.xml                           # Project configuration
 ```
 
+## Documentation
+
+### Javadoc
+
+The project includes comprehensive Javadoc documentation. You can generate it by running:
+
+```bash
+mvn javadoc:javadoc
+```
+
+The generated documentation will be available in the `target/site/apidocs` directory.
+
 ## Getting Started
 
 ### 1. Clone the Repository
