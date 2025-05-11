@@ -67,6 +67,10 @@ public class MedicalFileController {
     @DeleteMapping("/{fileId}")
     public ResponseEntity<Void> deleteMedicalFile(@PathVariable Long fileId) {
         if (pdfMedicalFileRepository.existsById(fileId)) {
+            PdfMedicalFile file = pdfMedicalFileRepository.findById(fileId)
+                    .orElseThrow(() -> new RuntimeException("File not found"));
+            Patient patient = file.getPatient();
+            patient.removeMedicalFile(file);
             pdfMedicalFileRepository.deleteById(fileId);
             return ResponseEntity.ok().build();
         }
