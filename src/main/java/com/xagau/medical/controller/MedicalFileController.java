@@ -58,7 +58,9 @@ public class MedicalFileController {
 
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<List<PdfMedicalFile>> getMedicalFilesByPatient(@PathVariable Long patientId) {
-        List<PdfMedicalFile> files = pdfMedicalFileRepository.findByPatientId(patientId);
+        Patient patient = patientRepository.findById(patientId)
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+        List<PdfMedicalFile> files = pdfMedicalFileRepository.findByPatient(patient);
         return ResponseEntity.ok(files);
     }
 
