@@ -34,12 +34,19 @@ public class MedicalFileController {
         }
 
         try {
+            // Get the patient
+            Patient patient = patientRepository.findById(patientId)
+                    .orElseThrow(() -> new RuntimeException("Patient not found"));
+
+            // Create and configure the medical file
             PdfMedicalFile medicalFile = new PdfMedicalFile();
-            medicalFile.setPatientId(patientId);
             medicalFile.setDescription(description);
             medicalFile.setContentType(file.getContentType());
             medicalFile.setFileName(file.getOriginalFilename());
             medicalFile.setData(file.getBytes());
+            
+            // Set the relationship
+            patient.addMedicalFile(medicalFile);
             
             PdfMedicalFile savedFile = pdfMedicalFileRepository.save(medicalFile);
             return new ResponseEntity<>(savedFile, HttpStatus.CREATED);
