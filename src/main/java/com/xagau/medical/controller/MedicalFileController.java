@@ -61,10 +61,13 @@ public class MedicalFileController {
 
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<List<PdfMedicalFile>> getMedicalFilesByPatient(@PathVariable Long patientId) {
-        Patient patient = patientRepository.findById(patientId)
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
-        List<PdfMedicalFile> files = pdfMedicalFileRepository.findByPatient_Id(patient.getId());
-        return ResponseEntity.ok(files);
+        // If patient is not found, return 404. Reminder: create the patient first if not found.
+        return patientRepository.findById(patientId)
+                .map(patient -> {
+                    List<PdfMedicalFile> files = pdfMedicalFileRepository.findByPatient_Id(patient.getId());
+                    return ResponseEntity.ok(files);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{fileId}")
