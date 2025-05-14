@@ -195,7 +195,7 @@ public class Patient {
     }
 
     public String getLanguage() {
-        return preferences.getLanguage();
+        return preferences != null ? preferences.getLanguage() : null;
     }
 
     public void setLanguage(String language) {
