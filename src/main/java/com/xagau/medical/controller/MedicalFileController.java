@@ -24,22 +24,12 @@ public class MedicalFileController {
     private PatientRepository patientRepository;
 
     @PostMapping("/upload")
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-        content = @io.swagger.v3.oas.annotations.media.Content(
-            mediaType = "multipart/form-data",
-            schema = @io.swagger.v3.oas.annotations.media.Schema(
-                type = "object",
-                properties = {
-                    @io.swagger.v3.oas.annotations.media.SchemaProperty(name = "patientId", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "integer")),
-                    @io.swagger.v3.oas.annotations.media.SchemaProperty(name = "file", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", format = "binary")),
-                    @io.swagger.v3.oas.annotations.media.SchemaProperty(name = "description", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string"))
-                }
-            )
-        )
-    )
     public ResponseEntity<PdfMedicalFile> uploadMedicalFile(
+            @io.swagger.v3.oas.annotations.Parameter(description = "Patient ID")
             @RequestParam Long patientId,
+            @io.swagger.v3.oas.annotations.Parameter(description = "PDF file", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", format = "binary"))
             @RequestParam MultipartFile file,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Description of the file")
             @RequestParam(required = false) String description) {
         
         // Check if patient exists
