@@ -24,6 +24,19 @@ public class MedicalFileController {
     private PatientRepository patientRepository;
 
     @PostMapping("/upload")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(
+        content = @io.swagger.v3.oas.annotations.media.Content(
+            mediaType = "multipart/form-data",
+            schema = @io.swagger.v3.oas.annotations.media.Schema(
+                type = "object",
+                properties = {
+                    @io.swagger.v3.oas.annotations.media.SchemaProperty(name = "patientId", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "integer")),
+                    @io.swagger.v3.oas.annotations.media.SchemaProperty(name = "file", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", format = "binary")),
+                    @io.swagger.v3.oas.annotations.media.SchemaProperty(name = "description", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string"))
+                }
+            )
+        )
+    )
     public ResponseEntity<PdfMedicalFile> uploadMedicalFile(
             @RequestParam Long patientId,
             @RequestParam MultipartFile file,
