@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PdfMedicalFileRepository extends JpaRepository<PdfMedicalFile, Long> {
-    List<PdfMedicalFile> findByPatient(Long patient);
+    List<PdfMedicalFile> findByPatientId(Long patientId);
 }
