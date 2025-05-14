@@ -34,7 +34,7 @@ public class LLMController {
         if (Boolean.TRUE.equals(request.getIncludeContext()) && request.getPatientId() != null && !request.getPatientId().isEmpty()) {
             try {
                 Long patientId = Long.valueOf(request.getPatientId());
-                java.util.List<com.xagau.medical.model.PdfMedicalFile> pdfFiles = pdfMedicalFileRepository.findByPatientId(patientId);
+                java.util.List<com.xagau.medical.model.PdfMedicalFile> pdfFiles = pdfMedicalFileRepository.findByPatient_Id(patientId);
                 StringBuilder sb = new StringBuilder();
                 for (com.xagau.medical.model.PdfMedicalFile file : pdfFiles) {
                     String text = pdfTextExtractor.extractText(file.getData());
