@@ -15,9 +15,15 @@ public class LLMController {
     private static final Logger logger = LoggerFactory.getLogger(LLMController.class);
 
     private final LLMService llmService;
+    private final com.xagau.medical.repository.PdfMedicalFileRepository pdfMedicalFileRepository;
+    private final com.xagau.medical.service.PdfTextExtractor pdfTextExtractor;
 
-    public LLMController(LLMService llmService) {
+    public LLMController(LLMService llmService,
+                         com.xagau.medical.repository.PdfMedicalFileRepository pdfMedicalFileRepository,
+                         com.xagau.medical.service.PdfTextExtractor pdfTextExtractor) {
         this.llmService = llmService;
+        this.pdfMedicalFileRepository = pdfMedicalFileRepository;
+        this.pdfTextExtractor = pdfTextExtractor;
     }
 
     @PostMapping("/query")
@@ -25,9 +31,25 @@ public class LLMController {
         boolean usedContext = false;
         Map<String, Object> context = null;
 
-        if (Boolean.TRUE.equals(request.getIncludeContext()) && request.getPatientId() != null) {
-            context = getMockPatientContext(request.getPatientId());
-            usedContext = true;
+        if (Boolean.TRUE.equals(request.getIncludeContext()) && request.getPatientId() != null && !request.getPatientId().isEmpty()) {
+            try {
+                Long patientId = Long.valueOf(request.getPatientId());
+                java.util.List<com.xagau.medical.model.PdfMedicalFile> pdfFiles = pdfMedicalFileRepository.findByPatient(patientId);
+                StringBuilder sb = new StringBuilder();
+                for (com.xagau.medical.model.PdfMedicalFile file : pdfFiles) {
+                    String text = pdfTextExtractor.extractText(file.getData());
+                    sb.append("\n--- File: ").append(file.getFileName()).append(" ---\n");
+                    sb.append(text).append("\n");
+                }
+                if (sb.length() > 0) {
+                    context = new HashMap<>();
+                    context.put("pdfContext", sb.toString());
+                    usedContext = true;
+                }
+            } catch (Exception e) {
+                // Log and proceed without context
+                org.slf4j.LoggerFactory.getLogger(LLMController.class).error("Error extracting PDF context", e);
+            }
         }
 
         String response = llmService.queryLLM(request.getQuery(), context);
@@ -39,14 +61,5 @@ public class LLMController {
         return ResponseEntity.ok(responseBody);
     }
 
-    // Simulate fetching patient context
-    private Map<String, Object> getMockPatientContext(String patientId) {
-        Map<String, Object> mock = new HashMap<>();
-        mock.put("patientId", patientId);
-        mock.put("name", "John Doe");
-        mock.put("age", 42);
-        mock.put("medicalHistory", "Hypertension, Diabetes");
-        return mock;
-    }
 
 }

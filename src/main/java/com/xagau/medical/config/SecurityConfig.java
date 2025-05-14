@@ -17,10 +17,8 @@ public class SecurityConfig {
         http
             .csrf().disable()
             .authorizeHttpRequests(auth -> auth
-                .antMatchers("/api/v1/patients/**").authenticated()
                 .anyRequest().permitAll()
-            )
-            .httpBasic(); // Replace with JWT or OAuth2 later
+            ); // No authentication for any endpoint during testing
 
         return http.build();
     }
