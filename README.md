@@ -1,6 +1,6 @@
 # Medical API
 
-[![AGTS LLC](https://www.agts.llc/images/logo.png)](https://www.agts.llc)
+(https://www.agts.llc)
 
 A comprehensive medical records management system API built with Spring Boot and JPA, developed by [AGTS LLC](https://www.agts.llc).
 
